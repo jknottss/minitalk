@@ -1,0 +1,37 @@
+SERVER = server
+CLIENT = client
+
+SERVER_SRC = server_bonus.c utils_bonus.c
+CLIENT_SRC = client_bonus.c utils_bonus.c
+
+SERVER_OBJS = ${SERVER_SRC:%.c=%.o}
+CLIENT_OBJS = ${CLIENT_SRC:%.c=%.o}
+
+CC = cc
+FLAGS = -Wall -Wextra -Werror
+
+MAKE = Makefile
+HEAD = minitalk.h
+
+RM = rm -rf
+
+%.o:		%.c $(HEAD) $(MAKE)
+	  		$(CC) $(FLAGS) -c $< -o ${<:.c=.o}
+
+all:	$(SERVER) $(CLIENT)
+
+$(SERVER):	$(SERVER_OBJS)
+			$(CC) $(FLAGS) -o $(SERVER) $(SERVER_OBJS)
+
+$(CLIENT):	$(CLIENT_OBJS)
+			$(CC) $(FLAGS) -o $(CLIENT) $(CLIENT_OBJS)
+
+clean:
+			$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
+
+fclean: 	clean
+			$(RM) $(SERVER) $(CLIENT)
+
+re: fclean all
+
+.PHONY: all clean fclean re
